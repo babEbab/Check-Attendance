@@ -13,42 +13,67 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="#ff0000"
             android:gravity="left"
-            android:orientation="vertical">
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/viewSemester"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2021년 2학기" />
+                android:text="2021년 2학기"
+                android:textSize="30dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#00ff00"
             android:gravity="right"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageButton
+                android:id="@+id/addSubject"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/add"
+                android:padding="0dp" />
 
             <ImageButton
                 android:id="@+id/selectSemester"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:padding="0dp"
                 android:src="@drawable/settings" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="0dp"
-                android:src="@drawable/settings" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/settings"
+                android:padding="0dp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/add"
+            android:padding="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="새로운 과목 추가하기"
+            android:textSize="20dp" />
     </LinearLayout>
 </LinearLayout>
