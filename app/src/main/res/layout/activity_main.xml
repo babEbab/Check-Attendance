@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#998888"
+    android:background="#cccccc"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/topContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -16,13 +17,13 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="left"
-            android:padding="10dp">
+            android:gravity="left">
 
             <TextView
                 android:id="@+id/viewSemester"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:text="2021년 2학기"
                 android:textSize="30dp" />
         </LinearLayout>
@@ -44,7 +45,7 @@
                 android:id="@+id/selectSemester"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/settings"
+                android:background="@drawable/subject_list"
                 android:padding="0dp" />
 
             <ImageButton
@@ -56,175 +57,621 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:paddingBottom="40dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/underContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left">
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:paddingBottom="40dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="모바일 프로그래밍"
-                    android:textSize="20dp" />
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/subjectName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="모바일 프로그래밍"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/professorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="10dp"
+                            android:text="채의근"
+                            android:textSize="20dp" />
+
+                        <ImageButton
+                            android:id="@+id/settingSubject"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/settings"
+                            android:padding="0dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/memo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="메모" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:stretchColumns="*">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="9/6" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="9/13" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="9/27" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="10/4" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="10/11" />
+
+
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="30dp">
+
+                        <Button
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="X" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/1" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="11/8" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/15" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/22" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/27" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="30dp">
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="10/25" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="10/25" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="10/25" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/1" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="11/8" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="30dp">
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+                    </TableRow>
+                </TableLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:paddingBottom="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="모바일 프로그래밍"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="10dp"
+                            android:text="채의근"
+                            android:textSize="20dp" />
+
+                        <ImageButton
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/settings"
+                            android:padding="0dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="메모" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:stretchColumns="*">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="9/6" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="9/13" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="9/27" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="10/4" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="10/11" />
+
+
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="30dp">
+
+                        <Button
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="X" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:gravity="center"
+                            android:text="O" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/1" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="11/8" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/15" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/22" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/27" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="30dp">
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="10/25" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="10/25" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="10/25" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:text="11/1" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="11/8" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="30dp">
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+
+                        <Button
+                            android:layout_weight="1"
+                            android:backgroundTint="#EABABA"
+                            android:gravity="center"
+                            android:text="O" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/add"
+                    android:padding="0dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="채의근"
+                    android:gravity="center"
+                    android:text="새로운 과목 추가하기"
                     android:textSize="20dp" />
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="메모" />
-        </LinearLayout>
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:stretchColumns="*">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="9/6" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="9/13" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="9/27" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="10/4" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="10/11" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="10/18" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="O" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="X" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="O" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="O" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="X" />
-
-                <TextView
-                    android:minWidth="50dp"
-                    android:text="X" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*">
-
-                <TextView android:text="9/6" />
-
-                <TextView android:text="9/13" />
-
-                <TextView android:text="9/27" />
-
-                <TextView android:text="10/4" />
-
-                <TextView android:text="10/11" />
-
-                <TextView android:text="10/18" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*">
-
-                <TextView android:text="O" />
-
-                <TextView android:text="X" />
-
-                <TextView android:text="O" />
-
-                <TextView android:text="O" />
-
-                <TextView android:text="X" />
-
-                <TextView android:text="X" />
-            </TableRow>
-
-        </TableLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/add"
-            android:padding="0dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="새로운 과목 추가하기"
-            android:textSize="20dp" />
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
