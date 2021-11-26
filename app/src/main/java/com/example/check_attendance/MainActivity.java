@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -70,20 +72,30 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // 토스트 메시지
                         Toast.makeText(MainActivity.this, "과목 추가", Toast.LENGTH_SHORT).show();
+
                         // DB에 과목 추가하기
                         sqlDB = myDBHelper.getWritableDatabase();
-                        // CREATE TABLE subjectTBL(subjectId INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        //                    "semester INTEGER, subjectName CHAR(30), subjectProfessor CHAR(20), " +
-                        //                    "subjectMemo CHAR(50), times INTEGER)
-                        sqlDB.execSQL("INSERT INTO subjectTBL VALUES (0," + viewSemester.getText() + ", '" + editTextAddSubject + "','"
-                                + editTextAddProfessor + "','" + editTextAddMemo + "'," + editTextAddTimes + ")");
+                        sqlDB.execSQL("INSERT INTO subjectTBL VALUES ('" + Integer.parseInt(viewSemester.getText().toString()) + ", '" +
+                                editTextAddSubject.getText().toString() + "','" + editTextAddProfessor.getText().toString() +
+                                "','" + editTextAddMemo.getText().toString() + "'," +
+                                Integer.parseInt(editTextAddTimes.getText().toString()) + ")");
+
+                        Cursor cursor = sqlDB.rawQuery("SELECT subjectId FROM subjectTBL ORDER BY ROWID DESC LIMIT 1", null);
+                        int recentSubjectId = cursor.getInt(0); // subjectTBL에 가장 최근에 저장된 데이터의 subjectId 가져오기
+                        int[] attInfo = new int[Integer.parseInt(editTextAddTimes.getText().toString())];
+                        for (int count = 0; i < attInfo.length; count++) { // 강의 횟수만큼 attInfoTBL에 데이터 삽입
+                            sqlDB.execSQL("INSERT INTO attInfoTBL VALUES (recentSubjectId + " + "," + null + "," + 0);
+                        }
+                        sqlDB.close();
+                        // 추가된 과목의 출석표를 화면에 보이게 하기
+                        updateView(Integer.parseInt(viewSemester.getText().toString()));
                     }
                 });
                 dlg.show();
             }
         });
 
-        addSubjectUnder.setOnClickListener(new View.OnClickListener() {
+        addSubjectUnder.setOnClickListener(new View.OnClickListener() { // addSubjectTop하고 똑같이 해주면 됨
             @Override
             public void onClick(View view) {
                 addSubjectDialog = (View) View.inflate(MainActivity.this, R.layout.add_subject_dialog, null);
@@ -100,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 학기 선택 가능한 dialog 불러오기
+
+                // 해당 학기에 해당되는 출석표를 화면에 보이게 하기
+                updateView(Integer.parseInt(viewSemester.getText().toString()));
             }
         });
 
@@ -107,15 +122,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 설정 listView 불러오기
-
             }
         });
+    }
+
+    public void updateView(int semester) {
+        // DB 업데이트 시 해당 학기에 맞는 과목 출석표가 화면에 즉시 반영되도록 함
+        sqlDB = myDBHelper.getReadableDatabase();
+        long numOfSubject = DatabaseUtils.queryNumEntries(sqlDB, "subjectTBL"); // row의 개수 가져오기
+        for (int i = 0; i < numOfSubject; i++) {
+            makeSubjectLayout(i);
+            makeSubjectAttLayout(i);
+        }
+    }
+
+    public void makeSubjectLayout(int count) { // 과목별 정보를 화면에 띄운다(과목 개수만큼 반복)
 
     }
 
-    public void UpdateView() {
-        // DB 업데이트 시 화면에 즉시 반영 가능하도록 함
-        sqlDB = myDBHelper.getWritableDatabase();
+    public void makeSubjectAttLayout(int count) { // 과목별 출석정보를 화면에 띄운다(강의 횟수만큼 반복)
 
     }
 
@@ -136,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            // 최초 실행 시에만 작동하도록 변경
             db.execSQL("DROP TABLE IF EXISTS subjectTBL");
             db.execSQL("DROP TABLE IF EXISTS attInfoTBL"); // Attendance Info Table
             onCreate(db);
