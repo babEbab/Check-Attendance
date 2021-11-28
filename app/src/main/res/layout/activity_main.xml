@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="2021년 2학기"
+                android:text="202102"
                 android:textSize="30dp" />
         </LinearLayout>
 
@@ -67,591 +67,592 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:paddingBottom="40dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/subjectName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="모바일 프로그래밍"
-                            android:textSize="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/professorName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="10dp"
-                            android:text="채의근"
-                            android:textSize="20dp" />
-
-                        <ImageButton
-                            android:id="@+id/settingSubject"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/settings"
-                            android:padding="0dp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/memo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="메모" />
-                </LinearLayout>
+<!--            // 동적 생성 필요한 부분!-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="20dp"-->
+<!--                android:paddingBottom="40dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="left"-->
+<!--                        android:padding="10dp">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/subjectName"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="모바일 프로그래밍1"-->
+<!--                            android:textSize="20dp" />-->
+<!--                    </LinearLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="right"-->
+
+<!--                        android:padding="10dp">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/professorName"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingRight="10dp"-->
+<!--                            android:text="채의근"-->
+<!--                            android:textSize="20dp" />-->
+
+<!--                        <ImageButton-->
+<!--                            android:id="@+id/settingSubject"-->
+<!--                            android:layout_width="20dp"-->
+<!--                            android:layout_height="20dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@drawable/settings"-->
+<!--                            android:padding="0dp" />-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:padding="10dp">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/memo"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="메모" />-->
+<!--                </LinearLayout>-->
+
+<!--                <TableLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:stretchColumns="*">-->
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:stretchColumns="*">
+<!--                    <TableRow-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="9/6" />-->
 
-                            android:text="9/6" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="9/13" />-->
 
-                            android:text="9/13" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="9/27" />-->
 
-                            android:text="9/27" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="10/4" />-->
 
-                            android:text="10/4" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="10/11" />-->
 
-                            android:text="10/11" />
 
+<!--                    </TableRow>-->
 
-                    </TableRow>
 
+<!--                    <TableRow-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:minHeight="30dp">-->
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minHeight="30dp">
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="X" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="X" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                    </TableRow>-->
 
-                    </TableRow>
+<!--                    <TableRow-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="11/1" />-->
 
-                            android:text="11/1" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="11/8" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="11/8" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="11/15" />-->
 
-                            android:text="11/15" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="11/22" />-->
 
-                            android:text="11/22" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                            android:text="11/27" />-->
 
-                            android:text="11/27" />
+<!--                    </TableRow>-->
 
-                    </TableRow>
+<!--                    <TableRow-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:minHeight="30dp">-->
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minHeight="30dp">
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+<!--                    </TableRow>-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-                    </TableRow>
+<!--                    <TableRow-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10/25" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="10/25" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10/25" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="10/25" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10/25" />
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-
-                            android:text="11/1" />
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="11/8" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minHeight="30dp">
-
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-
-                        <Button
-                            android:layout_weight="1"
-
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-
-                        <Button
-                            android:layout_weight="1"
-
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:paddingBottom="40dp">
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="10/25" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+
+<!--                            android:text="11/1" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="11/8" />-->
+
+<!--                    </TableRow>-->
+
+<!--                    <TableRow-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:minHeight="30dp">-->
+
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+<!--                    </TableRow>-->
+<!--                </TableLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="20dp"-->
+<!--                android:paddingBottom="40dp">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:padding="10dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="left"-->
+<!--                        android:padding="10dp">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="모바일 프로그래밍"
-                            android:textSize="20dp" />
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="모바일 프로그래밍2"-->
+<!--                            android:textSize="20dp" />-->
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="right"-->
 
-                        android:padding="10dp">
+<!--                        android:padding="10dp">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="10dp"
-                            android:text="채의근"
-                            android:textSize="20dp" />
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingRight="10dp"-->
+<!--                            android:text="채의근"-->
+<!--                            android:textSize="20dp" />-->
 
-                        <ImageButton
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/settings"
-                            android:padding="0dp" />
-                    </LinearLayout>
-                </LinearLayout>
+<!--                        <ImageButton-->
+<!--                            android:layout_width="20dp"-->
+<!--                            android:layout_height="20dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@drawable/settings"-->
+<!--                            android:padding="0dp" />-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="10dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:padding="10dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="메모" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="메모" />-->
+<!--                </LinearLayout>-->
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:stretchColumns="*">
+<!--                <TableLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:stretchColumns="*">-->
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                    <TableRow-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="9/6" />
+<!--                            android:text="9/6" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="9/13" />
+<!--                            android:text="9/13" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="9/27" />
+<!--                            android:text="9/27" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="10/4" />
+<!--                            android:text="10/4" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="10/11" />
+<!--                            android:text="10/11" />-->
 
 
-                    </TableRow>
+<!--                    </TableRow>-->
 
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minHeight="30dp">
+<!--                    <TableRow-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:minHeight="30dp">-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="X" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="X" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                    </TableRow>
+<!--                    </TableRow>-->
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                    <TableRow-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="11/1" />
+<!--                            android:text="11/1" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="11/8" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="11/8" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="11/15" />
+<!--                            android:text="11/15" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="11/22" />
+<!--                            android:text="11/22" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="11/27" />
+<!--                            android:text="11/27" />-->
 
-                    </TableRow>
+<!--                    </TableRow>-->
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minHeight="30dp">
+<!--                    <TableRow-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:minHeight="30dp">-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-                    </TableRow>
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+<!--                    </TableRow>-->
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                    <TableRow-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10/25" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="10/25" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10/25" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="10/25" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10/25" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="10/25" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
 
-                            android:text="11/1" />
+<!--                            android:text="11/1" />-->
 
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="11/8" />
+<!--                        <TextView-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="11/8" />-->
 
-                    </TableRow>
+<!--                    </TableRow>-->
 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minHeight="30dp">
+<!--                    <TableRow-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:minHeight="30dp">-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
 
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
 
-                        <Button
-                            android:layout_weight="1"
-                            android:backgroundTint="#EABABA"
-                            android:gravity="center"
-                            android:text="O" />
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
+<!--                        <Button-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:backgroundTint="#EABABA"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="O" />-->
+<!--                    </TableRow>-->
+<!--                </TableLayout>-->
+<!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
