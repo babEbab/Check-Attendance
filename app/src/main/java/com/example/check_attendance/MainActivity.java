@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextAddSubject, editTextAddProfessor, editTextAddMemo, editTextAddTimes;
 
     EditText editTextEditSubject, editTextEditProfessor, editTextEditMemo;
-    Button buttonEditSubject, buttonEditProfessor, buttonEditMemo;
+    Button buttonEditSubject, buttonEditProfessor, buttonEditMemo, buttonDeleteSubject;
 
     DatePicker datePicker;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewSemester = (TextView) findViewById(R.id.viewSemester);
         addSubjectTop = (ImageButton) findViewById(R.id.addSubjectTop);
-        addSubjectUnder = (ImageButton) findViewById(R.id.addSubjectUnder);
+//        addSubjectUnder = (ImageButton) findViewById(R.id.addSubjectUnder);
         selectSemester = (ImageButton) findViewById(R.id.selectSemester);
         settings = (ImageButton) findViewById(R.id.settings);
 
@@ -130,17 +130,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addSubjectUnder.setOnClickListener(new View.OnClickListener() { // addSubjectTop하고 똑같이 해주면 됨
-            @Override
-            public void onClick(View view) {
-                addSubjectDialog = (View) View.inflate(MainActivity.this, R.layout.add_subject_dialog, null);
-                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                dlg.setIcon(R.drawable.add);
-                dlg.setView(addSubjectDialog);
-                dlg.setPositiveButton("추가", null);
-                dlg.show();
-            }
-        });
+//        addSubjectUnder.setOnClickListener(new View.OnClickListener() { // addSubjectTop하고 똑같이 해주면 됨
+//            @Override
+//            public void onClick(View view) {
+//                addSubjectDialog = (View) View.inflate(MainActivity.this, R.layout.add_subject_dialog, null);
+//                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+//                dlg.setIcon(R.drawable.add);
+//                dlg.setView(addSubjectDialog);
+//                dlg.setPositiveButton("추가", null);
+//                dlg.show();
+//            }
+//        });
 
         selectSemester.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,17 +161,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateView(int semester) {
-        Toast.makeText(MainActivity.this, "updateView 시작", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "updateView 시작", Toast.LENGTH_SHORT).show();
         // DB 업데이트 시 해당 학기에 맞는 과목 출석표가 화면에 즉시 반영되도록 함
         sqlDB = myDBHelper.getReadableDatabase();
 
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM subjectTBL WHERE semester = " + semester, null);
-//        Toast.makeText(MainActivity.this, "cursor.getCount():" + cursor.getCount(), Toast.LENGTH_SHORT).show();
         int numOfSubject = cursor.getCount();
 
         // 화면 초기화
         underContent = (LinearLayout) findViewById(R.id.underContent); // underContent Layout
-        underContent.removeAllViewsInLayout();
+        underContent.removeAllViewsInLayout(); // underContent LinearLayout 아래에 있는 모든 뷰 지우기
 
         if (cursor.getCount() == 0) {
             return;
@@ -187,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
             subjectLinearLayouts[i] = new LinearLayout(this);
             makeSubjectLayout(subjectLinearLayouts[i], subjects[i]);
         }
+
+
         sqlDB.close();
     }
 
@@ -194,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
 
         // underContent Layout(id) 아래에 과목 띄우기
         // 1차
-//        subjectLinearLayout = new LinearLayout(this);
         subjectLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         subjectLinearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -245,41 +245,56 @@ public class MainActivity extends AppCompatActivity {
         settingSubject.setLayoutParams(lparam);
         settingSubject.setPadding(0, 0, 0, 0);
         settingSubject.setBackground(getResources().getDrawable(R.drawable.settings));
-
-        //                dlg.setView(addSubjectDialog);
-        //                dlg.setPositiveButton("추가", new DialogInterface.OnClickListener() {
-        //                    @Override
-        //                    public void onClick(DialogInterface dialogInterface, int i) {
-        //                        // 토스트 메시지
-        //                        Toast.makeText(MainActivity.this, "과목 추가", Toast.LENGTH_SHORT).show();
-        //
-        //                        // DB에 과목 추가하기
-        //                        sqlDB = myDBHelper.getWritableDatabase();
-        //                        sqlDB.execSQL("INSERT INTO subjectTBL VALUES ('" + Integer.parseInt(viewSemester.getText().toString()) + ", '" +
-        //                                editTextAddSubject.getText().toString() + "','" + editTextAddProfessor.getText().toString() +
-        //                                "','" + editTextAddMemo.getText().toString() + "'," +
-        //                                Integer.parseInt(editTextAddTimes.getText().toString()) + ")");
-        //
-        //                        Cursor cursor = sqlDB.rawQuery("SELECT subjectId FROM subjectTBL ORDER BY ROWID DESC LIMIT 1", null);
-        //                        int recentSubjectId = cursor.getInt(0); // subjectTBL에 가장 최근에 저장된 데이터의 subjectId 가져오기
-        //                        int[] attInfo = new int[Integer.parseInt(editTextAddTimes.getText().toString())];
-        //                        for (int count = 0; i < attInfo.length; count++) { // 강의 횟수만큼 attInfoTBL에 데이터 삽입
-        //                            sqlDB.execSQL("INSERT INTO attInfoTBL VALUES (recentSubjectId + " + "," + null + "," + 0);
-        //                        }
-        //                        sqlDB.close();
-        //                        // 추가된 과목의 출석표를 화면에 보이게 하기
-        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-        //                    }
-        //                });
-        //                dlg.show();
-        //            }
-        settingSubject.setOnClickListener(new View.OnClickListener() {
+        settingSubject.setOnClickListener(new View.OnClickListener() { // 과목 Setting OnClickListener
             @Override
             public void onClick(View view) {
                 subjectSettingDialog = (View) View.inflate(MainActivity.this, R.layout.subject_setting_dialog, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setIcon(R.drawable.settings);
                 dlg.setView(subjectSettingDialog);
+                editTextEditSubject = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditSubject); // 과목 이름
+                editTextEditProfessor = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditProfessor); // 과목 교수
+                editTextEditMemo = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditMemo); // 과목 메모
+                buttonEditSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonEditSubject); // 과목 이름
+                buttonEditProfessor = (Button) subjectSettingDialog.findViewById(R.id.buttonEditProfessor); // 과목 교수
+                buttonEditMemo = (Button) subjectSettingDialog.findViewById(R.id.buttonEditMemo); // 과목 메모
+                buttonDeleteSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonDeleteSubject); // 과목 삭제 버튼
+
+                buttonEditSubject.setOnClickListener(new View.OnClickListener() { // 과목 이름 Button OnClickListener
+                    @Override
+                    public void onClick(View view) {
+                        sqlDB = myDBHelper.getWritableDatabase();
+                        sqlDB.execSQL("UPDATE subjectTBL SET subjectName = '" + editTextEditSubject.getText().toString() + "' WHERE subjectId = "
+                                + subject.subjectId + ";");
+                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+                    }
+                });
+                buttonEditProfessor.setOnClickListener(new View.OnClickListener() { // 과목 교수 Button OnClickListener
+                    @Override
+                    public void onClick(View view) {
+                        sqlDB = myDBHelper.getWritableDatabase();
+                        sqlDB.execSQL("UPDATE subjectTBL SET subjectProfessor = '" + editTextEditProfessor.getText().toString() + "' WHERE subjectId = "
+                                + subject.subjectId + ";");
+                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+                    }
+                });
+                buttonEditMemo.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
+                    @Override
+                    public void onClick(View view) {
+                        sqlDB = myDBHelper.getWritableDatabase();
+                        sqlDB.execSQL("UPDATE subjectTBL SET subjectMemo = '" + editTextEditMemo.getText().toString() + "' WHERE subjectId = "
+                                + subject.subjectId + ";");
+                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+                    }
+                });
+                buttonDeleteSubject.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
+                    @Override
+                    public void onClick(View view) {
+                        sqlDB = myDBHelper.getWritableDatabase();
+                        sqlDB.execSQL("DELETE FROM subjectTBL WHERE subjectId = " + subject.subjectId + ";");
+                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+                    }
+                });
                 dlg.show();
             }
         });
@@ -317,7 +332,6 @@ public class MainActivity extends AppCompatActivity {
         // 출석 정보 가져오기
         sqlDB = myDBHelper.getReadableDatabase();
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM attInfoTBL WHERE subjectId = " + subject.subjectId, null);
-//        Toast.makeText(MainActivity.this, "출석 정보 가져오기 성공: " + cursor.getCount(), Toast.LENGTH_SHORT).show();
 
         // 출석 정보 띄우기(TableLayout)
         TableLayout tableLayout = new TableLayout(this);
@@ -326,7 +340,6 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.setBackgroundColor(Color.WHITE);
         tableLayout.setOrientation(LinearLayout.VERTICAL);
         tableLayout.setStretchAllColumns(true);
-//        Toast.makeText(MainActivity.this, "출석 정보 띄우기 성공", Toast.LENGTH_SHORT).show();
 
         int attTimes = subject.times;
         int[] attArr = new int[attTimes]; // cursor를 1번 움직일 때마다 출석 여부를 배열에 기록해둔다.
@@ -550,8 +563,8 @@ public class MainActivity extends AppCompatActivity {
 
         subjectLinearLayout.addView(tableLayout);
         // underContent Layout 안에 subjectLinearLayout 추가(제일 마지막 부분)
-        underContent.addView(subjectLinearLayout, 0);
-//        underContent.addView(subjectLinearLayout);
+        underContent.addView(subjectLinearLayout);
+//        underContent.addView(subjectLinearLayout, 0);
     }
 
     static private class Subject { // 과목 클래스
