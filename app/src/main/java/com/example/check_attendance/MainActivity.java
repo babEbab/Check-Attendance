@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
@@ -15,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -23,22 +23,29 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     myDBHelper myDBHelper;
-    SQLiteDatabase sqlDB, sqlDB2;
+    SQLiteDatabase sqlDB;
 
     TextView viewSemester;
     ImageButton addSubjectTop, addSubjectUnder, selectSemester, settings;
 
     LinearLayout underContent;
 
-    View addSubjectDialog, subjectSettingDialog;
+    View addSubjectDialog, subjectSettingDialog, datePickerDialog;
 
     EditText editTextAddSubject, editTextAddProfessor, editTextAddMemo, editTextAddTimes;
 
     EditText editTextEditSubject, editTextEditProfessor, editTextEditMemo;
     Button buttonEditSubject, buttonEditProfessor, buttonEditMemo;
+
+    DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         editTextAddMemo = (EditText) addSubjectDialog.findViewById(R.id.editTextAddMemo); // 과목 메모
                         editTextAddTimes = (EditText) addSubjectDialog.findViewById(R.id.editTextAddTimes); // 강의 횟수
                         // 토스트 메시지
-                        Toast.makeText(MainActivity.this, "과목 추가", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "과목 추가", Toast.LENGTH_SHORT).show();
 
                         // DB에 과목 추가하기
                         sqlDB = myDBHelper.getWritableDatabase();
@@ -97,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                                 "VALUES('" + viewSemester.getText().toString() + "', '" + editTextAddSubject.getText().toString() +
                                 "','" + editTextAddProfessor.getText().toString() + "','" + editTextAddMemo.getText().toString() +
                                 "'," + editTextAddTimes.getText().toString() + ")");
-                        Toast.makeText(MainActivity.this, "DB에 과목 추가", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "DB에 과목 추가", Toast.LENGTH_SHORT).show();
 
                         Cursor cursor = sqlDB.rawQuery("SELECT subjectId FROM subjectTBL ORDER BY ROWID DESC LIMIT 1", null);
                         int recentSubjectId = 0;
@@ -105,15 +112,16 @@ public class MainActivity extends AppCompatActivity {
                             recentSubjectId = cursor.getInt(0); // subjectTBL에 가장 최근에 저장된 데이터의 subjectId 가져오기
                         }
 //                        int[] attInfo = new int[Integer.parseInt(editTextAddTimes.getText().toString())];
-                        Toast.makeText(MainActivity.this, "editTextAddTimes.getText().toString()): " + editTextAddTimes.getText().toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "editTextAddTimes.getText().toString()): " + editTextAddTimes.getText().toString(), Toast.LENGTH_SHORT).show();
                         for (int k = 0; k < Integer.parseInt(editTextAddTimes.getText().toString()); k++) { // 강의 횟수만큼 attInfoTBL에 데이터 삽입
                             //            db.execSQL("CREATE TABLE attInfoTBL(infoId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                             //                    "subjectId INTEGER, date INTEGER, attendance INTEGER," +
                             //                    "FOREIGN KEY(subjectId) REFERENCES subjectTBL(subjectId))");
                             sqlDB.execSQL("INSERT INTO attInfoTBL(subjectId, date, attendance) VALUES(" + recentSubjectId + ", 99999999, 0)");
                         }
-                        Toast.makeText(MainActivity.this, "강의 횟수만큼 attInfoTBL에 데이터 삽입 성공", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "강의 횟수만큼 attInfoTBL에 데이터 삽입 성공", Toast.LENGTH_SHORT).show();
                         sqlDB.close();
+                        cursor.close();
                         // 추가된 과목의 출석표를 화면에 보이게 하기
                         updateView(Integer.parseInt(viewSemester.getText().toString()));
                     }
@@ -158,23 +166,13 @@ public class MainActivity extends AppCompatActivity {
         sqlDB = myDBHelper.getReadableDatabase();
 
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM subjectTBL WHERE semester = " + semester, null);
-        Toast.makeText(MainActivity.this, "cursor.getCount():" + cursor.getCount(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "cursor.getCount():" + cursor.getCount(), Toast.LENGTH_SHORT).show();
         int numOfSubject = cursor.getCount();
 
         // 화면 초기화
         underContent = (LinearLayout) findViewById(R.id.underContent); // underContent Layout
         underContent.removeAllViewsInLayout();
-//        for (int i = 0; i < numOfSubject; i++) {
-//            underContent.removeViewAt(i);
-//        }
 
-        //        while (cursor.moveToNext()) {
-//            Toast.makeText(MainActivity.this, "cursor.getInt():" + cursor.getInt(0) + " " + cursor.getInt(1), Toast.LENGTH_SHORT).show();
-//        }
-//        cursor = sqlDB.rawQuery("SELECT * FROM subjectTBL", null);
-//        while (cursor.moveToNext()) {
-//            Toast.makeText(MainActivity.this, "cursor.getInt():" + cursor.getInt(0) + " " + cursor.getInt(1), Toast.LENGTH_SHORT).show();
-//        }
         if (cursor.getCount() == 0) {
             return;
         }
@@ -317,9 +315,9 @@ public class MainActivity extends AppCompatActivity {
         subjectLinearLayout.addView(memoLinearLayout);
 
         // 출석 정보 가져오기
-        sqlDB = myDBHelper.getWritableDatabase();
+        sqlDB = myDBHelper.getReadableDatabase();
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM attInfoTBL WHERE subjectId = " + subject.subjectId, null);
-        Toast.makeText(MainActivity.this, "출석 정보 가져오기 성공: " + cursor.getCount(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "출석 정보 가져오기 성공: " + cursor.getCount(), Toast.LENGTH_SHORT).show();
 
         // 출석 정보 띄우기(TableLayout)
         TableLayout tableLayout = new TableLayout(this);
@@ -328,15 +326,7 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.setBackgroundColor(Color.WHITE);
         tableLayout.setOrientation(LinearLayout.VERTICAL);
         tableLayout.setStretchAllColumns(true);
-        Toast.makeText(MainActivity.this, "출석 정보 띄우기 성공", Toast.LENGTH_SHORT).show();
-        // 여기까지 성공
-
-        //         for (int i = 0; (i < numOfSubject) && cursor.moveToNext(); i++) { // Subject Class의 인스턴스 만들기
-        //            subjects[i] = new Subject(cursor.getInt(0), cursor.getString(2), cursor.getString(3),
-        //                    cursor.getString(4), cursor.getInt(5));
-        //            subjectLinearLayouts[i] = new LinearLayout(this);
-        //            makeSubjectLayout(subjectLinearLayouts[i], subjects[i]);
-        //        }
+//        Toast.makeText(MainActivity.this, "출석 정보 띄우기 성공", Toast.LENGTH_SHORT).show();
 
         int attTimes = subject.times;
         int[] attArr = new int[attTimes]; // cursor를 1번 움직일 때마다 출석 여부를 배열에 기록해둔다.
@@ -346,8 +336,9 @@ public class MainActivity extends AppCompatActivity {
 //        tableRowDate.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 //                ViewGroup.LayoutParams.WRAP_CONTENT));
 //        Toast.makeText(MainActivity.this, "tableRowDate 생성 start", Toast.LENGTH_SHORT).show();
-        int i = 0;
-        while (cursor.moveToNext() && (i < attTimes)) {
+
+        int infoId = 0, i = 0; // infoId: 해당 과목의 첫번째 출석 정보의 infoId
+        while (i < attTimes) {
 //            Toast.makeText(MainActivity.this, "cursor.moveToNext: " +cursor.getInt(2)+" "
 //                    + cursor.getInt(3), Toast.LENGTH_SHORT).show();
 //        for (int i = 0; (i < subject.times) && cursor.moveToNext(); i++) { // Subject Class의 인스턴스 만들기
@@ -358,125 +349,155 @@ public class MainActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 //                tableRowDate.setGravity(Gravity.CENTER);
 //                Toast.makeText(MainActivity.this, "tableRowDate 생성" + i, Toast.LENGTH_SHORT).show();
-                if ((attTimes - i) < 4) {
-                    for (int j = 0; j < (attTimes - i); j++) {
+                if ((attTimes - i) < 5) {
+                    for (int j = 0; (j < (attTimes - i)) && cursor.moveToNext(); j++) {
                         Button dateButton = new Button(this);
-//                    dateButton.setLayoutParams(lparam);
-//                    Toast.makeText(MainActivity.this, "Button 생성"+i+j, Toast.LENGTH_SHORT).show();
+                        if (i == 0 && j == 0) {
+                            infoId = cursor.getInt(0);
+                        }
                         dateButton.setText(String.valueOf(cursor.getInt(2) % 10000)); // 연도 빼고 월/일만 가져오기
                         dateButton.setBackgroundColor(Color.rgb(234, 186, 186));
-//                        dateButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                                TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         attArr[i + j] = cursor.getInt(3);
+//                        Toast.makeText(MainActivity.this, "attArr[" + i + " + " + j + "] = " + attArr[i + j], Toast.LENGTH_SHORT).show();
                         tableRowDate.addView(dateButton);
                     }
                 } else {
-                    for (int j = 0; j < 5; j++) {
+                    for (int j = 0; (j < 5) && cursor.moveToNext(); j++) {
                         Button dateButton = new Button(this);
+                        if (i == 0 && j == 0) {
+                            infoId = cursor.getInt(0);
+                        }
                         dateButton.setText(String.valueOf(cursor.getInt(2) % 10000)); // 연도 빼고 월/일만 가져오기
                         dateButton.setBackgroundColor(Color.rgb(234, 186, 186));
                         dateButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT, 1f));
+//                        dateButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                datePickerDialog = (View) View.inflate(MainActivity.this, R.layout.date_picker, null);
+//                                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+//                                dlg.setIcon(R.drawable.add);
+//                                dlg.setView(addSubjectDialog);
+//                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+////                                        datePicker = (DatePicker) datePickerDialog.findViewById(R.id.datePicker); // 과목 이름
+//                                        //                        editTextAddProfessor = (EditText) addSubjectDialog.findViewById(R.id.editTextAddProfessor); // 과목 교수
+//                                        //                        editTextAddMemo = (EditText) addSubjectDialog.findViewById(R.id.editTextAddMemo); // 과목 메모
+//                                        //                        editTextAddTimes = (EditText) addSubjectDialog.findViewById(R.id.editTextAddTimes); // 강의 횟수
+//
+//                                        //                        // DB에 과목 추가하기
+//                                        //                        sqlDB = myDBHelper.getWritableDatabase();
+//                                        //                        sqlDB.execSQL("INSERT INTO subjectTBL(semester, subjectName, subjectProfessor, subjectMemo, times) " +
+//                                        //                                "VALUES('" + viewSemester.getText().toString() + "', '" + editTextAddSubject.getText().toString() +
+//                                        //                                "','" + editTextAddProfessor.getText().toString() + "','" + editTextAddMemo.getText().toString() +
+//                                        //                                "'," + editTextAddTimes.getText().toString() + ")");
+//                                    }
+//                                });
+//                                updateView(202102);
+//                            }
+//                        });
                         attArr[i + j] = cursor.getInt(3);
                         tableRowDate.addView(dateButton);
-                    }
-                }
+                    }}
 
-                // 출석여부표
-                tableRowAtt = new TableRow(this);
-                tableRowAtt.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                if ((attTimes - i) < 4) {
-                    for (int j = 0; j < (attTimes - i); j++) {
-                        Button attButton = new Button(this);
-                        attButton.setWidth(50);
-                        attButton.setText(String.valueOf(attArr[i + j]));
-                        attButton.setBackgroundColor(Color.rgb(185,235,199));
-                        attButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if(attButton.getText().toString().equals("0")){
-//                                    sqlDB.execSQL();
+                    // 출석여부표
+                    tableRowAtt = new TableRow(this);
+                    tableRowAtt.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+                    if ((attTimes - i) < 5) {
+                        for (int j = 0; j < (attTimes - i); j++) {
+                            int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
+                            Button attButton = new Button(this);
+                            attButton.setWidth(50);
+                            attButton.setText(String.valueOf(attArr[infoNum]));
+                            attButton.setBackgroundColor(Color.rgb(185, 235, 199));
+
+                            int finalInfoId = infoId;
+                            attButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (attButton.getText().toString().equals("0")) {
+                                        Toast.makeText(MainActivity.this, "현재 text가 0일 때", Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    } else if (attButton.getText().toString().equals("1")) {
+                                        Toast.makeText(MainActivity.this, "현재 text가 1일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    } else if (attButton.getText().toString().equals("2")) {
+                                        Toast.makeText(MainActivity.this, "현재 text가 2일 때", Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "현재 text가 3일 때", Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    }
                                 }
-                            }
-                        });
-                        tableRowAtt.addView(attButton);
+                            });
+                            tableRowAtt.addView(attButton);
+                        }
+                    } else {
+                        for (int j = 0; j < 5; j++) {
+                            int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
+                            Button attButton = new Button(this);
+                            attButton.setWidth(50);
+                            attButton.setText(String.valueOf(attArr[i + j]));
+                            attButton.setBackgroundColor(Color.rgb(185, 235, 199));
+                            attButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                                    TableRow.LayoutParams.WRAP_CONTENT, 1f));
+
+                            int finalInfoId = infoId;
+                            attButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (attButton.getText().toString().equals("0")) {
+                                        Toast.makeText(MainActivity.this, "현재 text가 0일 때", Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    } else if (attButton.getText().toString().equals("1")) {
+                                        Toast.makeText(MainActivity.this, "현재 text가 1일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    } else if (attButton.getText().toString().equals("2")) {
+                                        Toast.makeText(MainActivity.this, "현재 text가 2일 때", Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                        updateView(202102);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "현재 text가 3일 때", Toast.LENGTH_SHORT).show();
+                                        sqlDB = myDBHelper.getWritableDatabase();
+                                        sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+//                                    Toast.makeText(MainActivity.this, "UPDATE attInfoTBL attendance InfoId: " + finalInfoId + " infoNum: " + infoNum +
+//                                            " infoId: " + (finalInfoId + infoNum), Toast.LENGTH_SHORT).show();
+                                        updateView(202102);
+                                    }
+                                }
+                            });
+                            tableRowAtt.addView(attButton);
+                        }
                     }
-                } else {
-                    for (int j = 0; j < 5; j++) {
-                        Button attButton = new Button(this);
-                        attButton.setWidth(50);
-                        attButton.setText(String.valueOf(attArr[i + j]));
-                        attButton.setBackgroundColor(Color.rgb(185,235,199));
-                        attButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                                TableRow.LayoutParams.WRAP_CONTENT, 1f));
-                        tableRowAtt.addView(attButton);
-                    }
+
+                    tableLayout.addView(tableRowDate);
+                    tableLayout.addView(tableRowAtt);
                 }
-
-                tableLayout.addView(tableRowDate);
-                tableLayout.addView(tableRowAtt);
+                i++;
             }
-//            Toast.makeText(MainActivity.this, "tableDate 성공" + i, Toast.LENGTH_SHORT).show();
 
-//            Toast.makeText(MainActivity.this, "날짜: " +cursor.getInt(2) % 10000+" 출석여부: "
-//                    + attArr[i], Toast.LENGTH_SHORT).show();
-//            if (i % 5 == 4 || i == (attTimes - 1)) {
-//                tableRowAtt = new TableRow(this);
-//                tableRowAtt.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT));
-//                for (int j = 0; j < (5-i%5); j++) {
-//                    Button attButton = new Button(this);
-//                    attButton.setText(attArr[i]);
-//                    tableRowAtt.addView(attButton);
-//                    Toast.makeText(MainActivity.this, "tableRowAtt.addView(attButton): " + i, Toast.LENGTH_SHORT).show();
-//                }
-////                tableLayout.addView(tableRowDate);
-//                tableLayout.addView(tableRowAtt);
-//                Toast.makeText(MainActivity.this, "tableLayout.addView: " + i, Toast.LENGTH_SHORT).show();
-//            }
-            i++;
-        }
-
-        // 커서 관련 문제 해결 요망
-//        for (int i = 1; i < subject.times; i++) {
-//            if (i % 5 == 1) {
-//                TableRow tableRowDate = new TableRow(this);
-//                tableRowDate.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT));
-//                int[] attArr = new int[5]; // cursor를 1번 움직일 때마다 출석 여부를 배열에 기록해둔다.
-//                for (int j = 0; (j <= subject.times - i) && cursor.moveToNext(); j++) {
-//                    Button dateButton = new Button(this);
-//                    dateButton.setText(cursor.getInt(2) / 10000); // 연도 빼고 월/일만 가져오기
-//                    attArr[j] = cursor.getInt(3);
-//                    tableRowDate.addView(dateButton);
-//                }
-//                Toast.makeText(MainActivity.this, "커서 문제일까?", Toast.LENGTH_SHORT).show();
-//                TableRow tableRowAtt = new TableRow(this);
-//                tableRowAtt.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT));
-//                for (int j = 0; j <= subject.times - i; j++) {
-//                    Button attButton = new Button(this);
-//                    attButton.setText(attArr[j]);
-//                    tableRowAtt.addView(attButton);
-//                }
-//                tableLayout.addView(tableRowDate);
-//                tableLayout.addView(tableRowAtt);
-//            }
-//        }
-        sqlDB.close();
-
-        subjectLinearLayout.addView(tableLayout);
-        // underContent Layout 안에 subjectLinearLayout 추가(제일 마지막 부분)
-//        underContent.addView(subjectLinearLayout, 0);
-        underContent.addView(subjectLinearLayout);
+            subjectLinearLayout.addView(tableLayout);
+            // underContent Layout 안에 subjectLinearLayout 추가(제일 마지막 부분)
+            underContent.addView(subjectLinearLayout, 0);
+//        underContent.addView(subjectLinearLayout);
     }
 
-//    public void makeSubjectAttLayout(int count) { // 과목별 출석정보를 화면에 띄운다(강의 횟수만큼 반복)
-//
-//    }
-
-    private class Subject { // 과목 클래스
+    static private class Subject { // 과목 클래스
         String subjectName, subjectProfessor, subjectMemo;
         int subjectId, times;
         int[] dates, attendances;
