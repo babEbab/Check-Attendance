@@ -111,15 +111,9 @@ public class MainActivity extends AppCompatActivity {
                         while (cursor.moveToNext()) { // while 무조건 써줘야 함
                             recentSubjectId = cursor.getInt(0); // subjectTBL에 가장 최근에 저장된 데이터의 subjectId 가져오기
                         }
-//                        int[] attInfo = new int[Integer.parseInt(editTextAddTimes.getText().toString())];
-//                        Toast.makeText(MainActivity.this, "editTextAddTimes.getText().toString()): " + editTextAddTimes.getText().toString(), Toast.LENGTH_SHORT).show();
                         for (int k = 0; k < Integer.parseInt(editTextAddTimes.getText().toString()); k++) { // 강의 횟수만큼 attInfoTBL에 데이터 삽입
-                            //            db.execSQL("CREATE TABLE attInfoTBL(infoId INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                            //                    "subjectId INTEGER, date INTEGER, attendance INTEGER," +
-                            //                    "FOREIGN KEY(subjectId) REFERENCES subjectTBL(subjectId))");
                             sqlDB.execSQL("INSERT INTO attInfoTBL(subjectId, date, attendance) VALUES(" + recentSubjectId + ", 99999999, 0)");
                         }
-//                        Toast.makeText(MainActivity.this, "강의 횟수만큼 attInfoTBL에 데이터 삽입 성공", Toast.LENGTH_SHORT).show();
                         sqlDB.close();
                         cursor.close();
                         // 추가된 과목의 출석표를 화면에 보이게 하기
@@ -480,32 +474,45 @@ public class MainActivity extends AppCompatActivity {
                         int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
                         Button attButton = new Button(this);
                         attButton.setWidth(50);
-                        attButton.setText(String.valueOf(attArr[infoNum]));
+                        switch (String.valueOf(attArr[infoNum])) {
+                            case "0":
+                                attButton.setText(null);
+                                break;
+                            case "1":
+                                attButton.setText("출석");
+                                break;
+                            case "2":
+                                attButton.setText("결석");
+                                break;
+                            case "3":
+                                attButton.setText("지각/조퇴");
+                                break;
+                        }
                         attButton.setBackgroundColor(Color.rgb(185, 235, 199));
 
                         int finalInfoId = infoId;
                         attButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (attButton.getText().toString().equals("0")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 0일 때", Toast.LENGTH_SHORT).show();
+                                if (attButton.getText().toString().equals("")) {
+                                    Toast.makeText(MainActivity.this, "현재 text가 null일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
-                                } else if (attButton.getText().toString().equals("1")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 1일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
+                                } else if (attButton.getText().toString().equals("출석")) {
+                                    Toast.makeText(MainActivity.this, "현재 text가 출석일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
-                                } else if (attButton.getText().toString().equals("2")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 2일 때", Toast.LENGTH_SHORT).show();
+                                } else if (attButton.getText().toString().equals("결석")) {
+                                    Toast.makeText(MainActivity.this, "현재 text가 결석일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
                                 } else {
-                                    Toast.makeText(MainActivity.this, "현재 text가 3일 때", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "현재 text가 지각/조퇴일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
                                 }
                             }
@@ -521,32 +528,43 @@ public class MainActivity extends AppCompatActivity {
                         attButton.setBackgroundColor(Color.rgb(185, 235, 199));
                         attButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT, 1f));
-
+                        switch (String.valueOf(attArr[infoNum])) {
+                            case "0":
+                                attButton.setText(null);
+                                break;
+                            case "1":
+                                attButton.setText("출석");
+                                break;
+                            case "2":
+                                attButton.setText("결석");
+                                break;
+                            case "3":
+                                attButton.setText("지각/조퇴");
+                                break;
+                        }
                         int finalInfoId = infoId;
                         attButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (attButton.getText().toString().equals("0")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 0일 때", Toast.LENGTH_SHORT).show();
+                                if (attButton.getText().toString().equals("")) {
+                                    Toast.makeText(MainActivity.this, "현재 text가 null일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
-                                } else if (attButton.getText().toString().equals("1")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 1일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
+                                } else if (attButton.getText().toString().equals("출석")) {
+                                    Toast.makeText(MainActivity.this, "현재 text가 출석일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
-                                } else if (attButton.getText().toString().equals("2")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 2일 때", Toast.LENGTH_SHORT).show();
+                                } else if (attButton.getText().toString().equals("결석")) {
+                                    Toast.makeText(MainActivity.this, "현재 text가 결석일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
                                 } else {
-                                    Toast.makeText(MainActivity.this, "현재 text가 3일 때", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "현재 text가 지각/조퇴일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-//                                    Toast.makeText(MainActivity.this, "UPDATE attInfoTBL attendance InfoId: " + finalInfoId + " infoNum: " + infoNum +
-//                                            " infoId: " + (finalInfoId + infoNum), Toast.LENGTH_SHORT).show();
+                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
                                     updateView(202102);
                                 }
                             }
