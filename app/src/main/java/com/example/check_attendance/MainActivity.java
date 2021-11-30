@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout underContent;
 
-    View addSubjectDialog, subjectSettingDialog, datePickerDialog;
+    View addSubjectDialog, subjectSettingDialog, datePickerDialog, selectSemesterDialog;
 
     EditText editTextAddSubject, editTextAddProfessor, editTextAddMemo, editTextAddTimes;
 
@@ -96,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                         editTextAddMemo = (EditText) addSubjectDialog.findViewById(R.id.editTextAddMemo); // 과목 메모
                         editTextAddTimes = (EditText) addSubjectDialog.findViewById(R.id.editTextAddTimes); // 강의 횟수
                         // 토스트 메시지
-//                        Toast.makeText(MainActivity.this, "과목 추가", Toast.LENGTH_SHORT).show();
 
                         // DB에 과목 추가하기
                         sqlDB = myDBHelper.getWritableDatabase();
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                                 "VALUES('" + viewSemester.getText().toString() + "', '" + editTextAddSubject.getText().toString() +
                                 "','" + editTextAddProfessor.getText().toString() + "','" + editTextAddMemo.getText().toString() +
                                 "'," + editTextAddTimes.getText().toString() + ")");
-//                        Toast.makeText(MainActivity.this, "DB에 과목 추가", Toast.LENGTH_SHORT).show();
 
                         Cursor cursor = sqlDB.rawQuery("SELECT subjectId FROM subjectTBL ORDER BY ROWID DESC LIMIT 1", null);
                         int recentSubjectId = 0;
@@ -136,13 +136,84 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        //            @Override
+        //            public void onClick(View view) {
+        //                subjectSettingDialog = (View) View.inflate(MainActivity.this, R.layout.subject_setting_dialog, null);
+        //                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+        //                dlg.setIcon(R.drawable.settings);
+        //                dlg.setView(subjectSettingDialog);
+        //                editTextEditSubject = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditSubject); // 과목 이름
+        //                editTextEditProfessor = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditProfessor); // 과목 교수
+        //                editTextEditMemo = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditMemo); // 과목 메모
+        //                buttonEditSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonEditSubject); // 과목 이름
+        //                buttonEditProfessor = (Button) subjectSettingDialog.findViewById(R.id.buttonEditProfessor); // 과목 교수
+        //                buttonEditMemo = (Button) subjectSettingDialog.findViewById(R.id.buttonEditMemo); // 과목 메모
+        //                buttonDeleteSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonDeleteSubject); // 과목 삭제 버튼
+        //
+        //                buttonEditSubject.setOnClickListener(new View.OnClickListener() { // 과목 이름 Button OnClickListener
+        //                    @Override
+        //                    public void onClick(View view) {
+        //                        sqlDB = myDBHelper.getWritableDatabase();
+        //                        sqlDB.execSQL("UPDATE subjectTBL SET subjectName = '" + editTextEditSubject.getText().toString() + "' WHERE subjectId = "
+        //                                + subject.subjectId + ";");
+        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+        //                    }
+        //                });
+        //                buttonEditProfessor.setOnClickListener(new View.OnClickListener() { // 과목 교수 Button OnClickListener
+        //                    @Override
+        //                    public void onClick(View view) {
+        //                        sqlDB = myDBHelper.getWritableDatabase();
+        //                        sqlDB.execSQL("UPDATE subjectTBL SET subjectProfessor = '" + editTextEditProfessor.getText().toString() + "' WHERE subjectId = "
+        //                                + subject.subjectId + ";");
+        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+        //                    }
+        //                });
+        //                buttonEditMemo.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
+        //                    @Override
+        //                    public void onClick(View view) {
+        //                        sqlDB = myDBHelper.getWritableDatabase();
+        //                        sqlDB.execSQL("UPDATE subjectTBL SET subjectMemo = '" + editTextEditMemo.getText().toString() + "' WHERE subjectId = "
+        //                                + subject.subjectId + ";");
+        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+        //                    }
+        //                });
+        //                buttonDeleteSubject.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
+        //                    @Override
+        //                    public void onClick(View view) {
+        //                        sqlDB = myDBHelper.getWritableDatabase();
+        //                        sqlDB.execSQL("DELETE FROM subjectTBL WHERE subjectId = " + subject.subjectId + ";");
+        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+        //                    }
+        //                });
+        //                dlg.show();
+        //            }
+        //        });
+
         selectSemester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 학기 선택 가능한 dialog 불러오기
+                selectSemesterDialog = getLayoutInflater().inflate(R.layout.select_semester, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                dlg.setIcon(R.drawable.subject_list);
+                dlg.setView(selectSemesterDialog);
 
-                // 해당 학기에 해당되는 출석표를 화면에 보이게 하기
-                updateView(Integer.parseInt(viewSemester.getText().toString()));
+                // 학기 목록 배열
+//                final String[] semester = {"202001", "202002", "202101", "202102"};
+
+                final Spinner semesterSpinner = (Spinner) selectSemesterDialog.findViewById(R.id.semesterSpinner); // 스피너
+                ArrayAdapter adapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.semesters, android.R.layout.simple_spinner_item);
+                semesterSpinner.setAdapter(adapter);
+
+                dlg.setPositiveButton("선택", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        viewSemester.setText(semesterSpinner.getSelectedItem().toString());
+                        // 해당 학기에 해당되는 출석표를 화면에 보이게 하기
+                        updateView(Integer.parseInt(viewSemester.getText().toString()));
+                    }
+                });
+                dlg.show();
             }
         });
 
@@ -394,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                         sqlDB.execSQL("UPDATE attInfoTBL SET date = " + date + " WHERE subjectId = "
                                                 + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                        updateView(202102);
+                                        updateView(Integer.parseInt(viewSemester.getText().toString()));
                                     }
                                 });
                                 dlg.show();
@@ -453,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                         sqlDB.execSQL("UPDATE attInfoTBL SET date = " + date + " WHERE subjectId = "
                                                 + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                        updateView(202102);
+                                        updateView(Integer.parseInt(viewSemester.getText().toString()));
                                     }
                                 });
                                 dlg.show();
@@ -498,22 +569,22 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "현재 text가 null일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 } else if (attButton.getText().toString().equals("출석")) {
                                     Toast.makeText(MainActivity.this, "현재 text가 출석일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 } else if (attButton.getText().toString().equals("결석")) {
                                     Toast.makeText(MainActivity.this, "현재 text가 결석일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 } else {
                                     Toast.makeText(MainActivity.this, "현재 text가 지각/조퇴일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 }
                             }
                         });
@@ -550,22 +621,22 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "현재 text가 null일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 } else if (attButton.getText().toString().equals("출석")) {
                                     Toast.makeText(MainActivity.this, "현재 text가 출석일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 } else if (attButton.getText().toString().equals("결석")) {
                                     Toast.makeText(MainActivity.this, "현재 text가 결석일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 } else {
                                     Toast.makeText(MainActivity.this, "현재 text가 지각/조퇴일 때", Toast.LENGTH_SHORT).show();
                                     sqlDB = myDBHelper.getWritableDatabase();
                                     sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(202102);
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
                                 }
                             }
                         });
