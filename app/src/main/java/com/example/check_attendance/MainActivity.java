@@ -25,18 +25,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 public class MainActivity extends AppCompatActivity {
 
     myDBHelper myDBHelper;
     SQLiteDatabase sqlDB;
 
     TextView viewSemester;
-    ImageButton addSubjectTop, addSubjectUnder, selectSemester, settings;
+    ImageButton addSubjectTop, selectSemester, settings;
 
     LinearLayout underContent;
 
@@ -54,22 +49,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Check Attendance");
-//        sqlDB = myDBHelper.getWritableDatabase(); // SQL 작동 확인
-//        Toast.makeText(MainActivity.this, "DB 작동 확인", Toast.LENGTH_SHORT).show();
-//        sqlDB.close();
-//        Toast.makeText(MainActivity.this, "DB CLOSE 확인", Toast.LENGTH_SHORT).show();
 
         viewSemester = (TextView) findViewById(R.id.viewSemester);
         addSubjectTop = (ImageButton) findViewById(R.id.addSubjectTop);
-//        addSubjectUnder = (ImageButton) findViewById(R.id.addSubjectUnder);
         selectSemester = (ImageButton) findViewById(R.id.selectSemester);
         settings = (ImageButton) findViewById(R.id.settings);
-
-//        // 과목 추가 dialog 관련 위젯
-//        editTextAddSubject = (EditText) findViewById(R.id.editTextAddSubject); // 과목 이름
-//        editTextAddProfessor = (EditText) findViewById(R.id.editTextAddProfessor); // 과목 교수
-//        editTextAddMemo = (EditText) findViewById(R.id.editTextAddMemo); // 과목 메모
-//        editTextAddTimes = (EditText) findViewById(R.id.editTextAddTimes); // 강의 횟수
 
         // 과목 수정 dialog 관련 위젯
         editTextEditSubject = (EditText) findViewById(R.id.editTextEditSubject);
@@ -97,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                         editTextAddProfessor = (EditText) addSubjectDialog.findViewById(R.id.editTextAddProfessor); // 과목 교수
                         editTextAddMemo = (EditText) addSubjectDialog.findViewById(R.id.editTextAddMemo); // 과목 메모
                         editTextAddTimes = (EditText) addSubjectDialog.findViewById(R.id.editTextAddTimes); // 강의 횟수
-                        // 토스트 메시지
 
                         // DB에 과목 추가하기
                         sqlDB = myDBHelper.getWritableDatabase();
@@ -124,71 +107,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        addSubjectUnder.setOnClickListener(new View.OnClickListener() { // addSubjectTop하고 똑같이 해주면 됨
-//            @Override
-//            public void onClick(View view) {
-//                addSubjectDialog = (View) View.inflate(MainActivity.this, R.layout.add_subject_dialog, null);
-//                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-//                dlg.setIcon(R.drawable.add);
-//                dlg.setView(addSubjectDialog);
-//                dlg.setPositiveButton("추가", null);
-//                dlg.show();
-//            }
-//        });
-
-        //            @Override
-        //            public void onClick(View view) {
-        //                subjectSettingDialog = (View) View.inflate(MainActivity.this, R.layout.subject_setting_dialog, null);
-        //                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-        //                dlg.setIcon(R.drawable.settings);
-        //                dlg.setView(subjectSettingDialog);
-        //                editTextEditSubject = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditSubject); // 과목 이름
-        //                editTextEditProfessor = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditProfessor); // 과목 교수
-        //                editTextEditMemo = (EditText) subjectSettingDialog.findViewById(R.id.editTextEditMemo); // 과목 메모
-        //                buttonEditSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonEditSubject); // 과목 이름
-        //                buttonEditProfessor = (Button) subjectSettingDialog.findViewById(R.id.buttonEditProfessor); // 과목 교수
-        //                buttonEditMemo = (Button) subjectSettingDialog.findViewById(R.id.buttonEditMemo); // 과목 메모
-        //                buttonDeleteSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonDeleteSubject); // 과목 삭제 버튼
-        //
-        //                buttonEditSubject.setOnClickListener(new View.OnClickListener() { // 과목 이름 Button OnClickListener
-        //                    @Override
-        //                    public void onClick(View view) {
-        //                        sqlDB = myDBHelper.getWritableDatabase();
-        //                        sqlDB.execSQL("UPDATE subjectTBL SET subjectName = '" + editTextEditSubject.getText().toString() + "' WHERE subjectId = "
-        //                                + subject.subjectId + ";");
-        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-        //                    }
-        //                });
-        //                buttonEditProfessor.setOnClickListener(new View.OnClickListener() { // 과목 교수 Button OnClickListener
-        //                    @Override
-        //                    public void onClick(View view) {
-        //                        sqlDB = myDBHelper.getWritableDatabase();
-        //                        sqlDB.execSQL("UPDATE subjectTBL SET subjectProfessor = '" + editTextEditProfessor.getText().toString() + "' WHERE subjectId = "
-        //                                + subject.subjectId + ";");
-        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-        //                    }
-        //                });
-        //                buttonEditMemo.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
-        //                    @Override
-        //                    public void onClick(View view) {
-        //                        sqlDB = myDBHelper.getWritableDatabase();
-        //                        sqlDB.execSQL("UPDATE subjectTBL SET subjectMemo = '" + editTextEditMemo.getText().toString() + "' WHERE subjectId = "
-        //                                + subject.subjectId + ";");
-        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-        //                    }
-        //                });
-        //                buttonDeleteSubject.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
-        //                    @Override
-        //                    public void onClick(View view) {
-        //                        sqlDB = myDBHelper.getWritableDatabase();
-        //                        sqlDB.execSQL("DELETE FROM subjectTBL WHERE subjectId = " + subject.subjectId + ";");
-        //                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-        //                    }
-        //                });
-        //                dlg.show();
-        //            }
-        //        });
-
         selectSemester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,9 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setIcon(R.drawable.subject_list);
                 dlg.setView(selectSemesterDialog);
-
-                // 학기 목록 배열
-//                final String[] semester = {"202001", "202002", "202101", "202102"};
 
                 final Spinner semesterSpinner = (Spinner) selectSemesterDialog.findViewById(R.id.semesterSpinner); // 스피너
                 ArrayAdapter adapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.semesters, android.R.layout.simple_spinner_item);
@@ -226,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateView(int semester) {
-//        Toast.makeText(MainActivity.this, "updateView 시작", Toast.LENGTH_SHORT).show();
         // DB 업데이트 시 해당 학기에 맞는 과목 출석표가 화면에 즉시 반영되도록 함
         sqlDB = myDBHelper.getReadableDatabase();
 
@@ -406,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.setOrientation(LinearLayout.VERTICAL);
         tableLayout.setStretchAllColumns(true);
 
-        int attTimes = subject.times;
+        int attTimes = subject.times; // 출결 횟수 == 강의 횟수
         int[] attArr = new int[attTimes]; // cursor를 1번 움직일 때마다 출석 여부를 배열에 기록해둔다.
         TableRow tableRowDate, tableRowAtt;
 
@@ -417,231 +331,127 @@ public class MainActivity extends AppCompatActivity {
                 tableRowDate = new TableRow(this);
                 tableRowDate.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-//                tableRowDate.setGravity(Gravity.CENTER);
+
+                int selectTimes = 0; // 출석일을 기록해주는 for 문의 반복 횟수
                 if ((attTimes - i) < 5) {
-                    for (int j = 0; (j < (attTimes - i)) && cursor.moveToNext(); j++) {
-                        int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
-                        Button dateButton = new Button(this);
-                        if (i == 0 && j == 0) {
-                            infoId = cursor.getInt(0);
-                        }
-                        dateButton.setText(String.valueOf(cursor.getInt(2) % 10000)); // 연도 빼고 월/일만 가져오기
-                        dateButton.setBackgroundColor(Color.rgb(234, 186, 186));
-
-                        // dateButton.setOnClickListener Start
-                        int finalInfoId = infoId;
-                        dateButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                datePickerDialog = (View) View.inflate(MainActivity.this, R.layout.date_picker, null);
-                                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                                dlg.setIcon(R.drawable.add);
-                                dlg.setView(datePickerDialog);
-                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        datePicker = (DatePicker) datePickerDialog.findViewById(R.id.datePicker); // datePicker
-
-                                        // DB에 날짜 수정하기
-                                        int year = datePicker.getYear();
-                                        int month = datePicker.getMonth() + 1;
-                                        int day = datePicker.getDayOfMonth();
-                                        Toast.makeText(MainActivity.this, year + " " + month + " " + day, Toast.LENGTH_SHORT).show();
-
-                                        sqlDB = myDBHelper.getWritableDatabase();
-
-                                        String date = Integer.toString(year);
-                                        if (month < 10 && day < 10) {
-                                            date += ("0" + month);
-                                            date += ("0" + day);
-                                        } else if (month < 10) {
-                                            date += ("0" + month);
-                                            date += Integer.toString(day);
-                                        } else if (day < 10) {
-                                            date += Integer.toString(month);
-                                            date += ("0" + day);
-                                        } else {
-                                            date += month + Integer.toString(day);
-                                        }
-                                        sqlDB.execSQL("UPDATE attInfoTBL SET date = " + date + " WHERE subjectId = "
-                                                + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                    }
-                                });
-                                dlg.show();
-                            }
-                        });
-
-                        attArr[i + j] = cursor.getInt(3);
-                        tableRowDate.addView(dateButton);
-                    }
+                    selectTimes = attTimes - i;
                 } else {
-                    for (int j = 0; (j < 5) && cursor.moveToNext(); j++) {
-                        int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
-                        Button dateButton = new Button(this);
-                        if (i == 0 && j == 0) {
-                            infoId = cursor.getInt(0);
-                        }
-                        dateButton.setText(String.valueOf(cursor.getInt(2) % 10000)); // 연도 빼고 월/일만 가져오기
-                        dateButton.setBackgroundColor(Color.rgb(234, 186, 186));
+                    selectTimes = 5;
+                }
+
+                for (int j = 0; (j < selectTimes) && cursor.moveToNext(); j++) {
+                    int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
+                    Button dateButton = new Button(this);
+                    if (i == 0 && j == 0) {
+                        infoId = cursor.getInt(0);
+                    }
+                    dateButton.setText(String.valueOf(cursor.getInt(2) % 10000)); // 연도 빼고 월/일만 가져오기
+                    dateButton.setBackgroundColor(Color.rgb(234, 186, 186));
+                    if (selectTimes == 5) { // selectTimes가 5일 경우, dateButton의 weight를 1f로 지정해주어 5개의 날짜 버튼이 모두 같은 크기로 보일 수 있도록 한다.
                         dateButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT, 1f));
-
-                        // dateButton.setOnClickListener Start
-                        int finalInfoId = infoId;
-                        dateButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                datePickerDialog = (View) View.inflate(MainActivity.this, R.layout.date_picker, null);
-                                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                                dlg.setIcon(R.drawable.add);
-                                dlg.setView(datePickerDialog);
-                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        datePicker = (DatePicker) datePickerDialog.findViewById(R.id.datePicker); // datePicker
-
-                                        // DB에 날짜 수정하기
-                                        int year = datePicker.getYear();
-                                        int month = datePicker.getMonth() + 1;
-                                        int day = datePicker.getDayOfMonth();
-                                        Toast.makeText(MainActivity.this, year + " " + month + " " + day, Toast.LENGTH_SHORT).show();
-
-                                        sqlDB = myDBHelper.getWritableDatabase();
-
-                                        String date = Integer.toString(year);
-                                        if (month < 10 && day < 10) {
-                                            date += ("0" + month);
-                                            date += ("0" + day);
-                                        } else if (month < 10) {
-                                            date += ("0" + month);
-                                            date += Integer.toString(day);
-                                        } else if (day < 10) {
-                                            date += Integer.toString(month);
-                                            date += ("0" + day);
-                                        } else {
-                                            date += month + Integer.toString(day);
-                                        }
-                                        sqlDB.execSQL("UPDATE attInfoTBL SET date = " + date + " WHERE subjectId = "
-                                                + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                        updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                    }
-                                });
-                                dlg.show();
-                            }
-                        });
-
-                        attArr[i + j] = cursor.getInt(3);
-                        tableRowDate.addView(dateButton);
                     }
+
+                    // dateButton.setOnClickListener Start
+                    int finalInfoId = infoId;
+                    dateButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            datePickerDialog = (View) View.inflate(MainActivity.this, R.layout.date_picker, null);
+                            AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                            dlg.setIcon(R.drawable.add);
+                            dlg.setView(datePickerDialog);
+                            dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    datePicker = (DatePicker) datePickerDialog.findViewById(R.id.datePicker); // datePicker
+
+                                    // DB에 날짜 수정하기
+                                    int year = datePicker.getYear();
+                                    int month = datePicker.getMonth() + 1;
+                                    int day = datePicker.getDayOfMonth();
+//                                    Toast.makeText(MainActivity.this, year + " " + month + " " + day, Toast.LENGTH_SHORT).show();
+
+                                    sqlDB = myDBHelper.getWritableDatabase();
+
+                                    String date = Integer.toString(year);
+                                    if (month < 10 && day < 10) {
+                                        date += ("0" + month);
+                                        date += ("0" + day);
+                                    } else if (month < 10) {
+                                        date += ("0" + month);
+                                        date += Integer.toString(day);
+                                    } else if (day < 10) {
+                                        date += Integer.toString(month);
+                                        date += ("0" + day);
+                                    } else {
+                                        date += month + Integer.toString(day);
+                                    }
+                                    sqlDB.execSQL("UPDATE attInfoTBL SET date = " + date + " WHERE subjectId = "
+                                            + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
+                                }
+                            });
+                            dlg.show();
+                        }
+                    });
+
+                    attArr[i + j] = cursor.getInt(3);
+                    tableRowDate.addView(dateButton);
                 }
 
                 // 출석여부표
                 tableRowAtt = new TableRow(this);
                 tableRowAtt.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-                if ((attTimes - i) < 5) {
-                    for (int j = 0; j < (attTimes - i); j++) {
-                        int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
-                        Button attButton = new Button(this);
-                        attButton.setWidth(50);
-                        switch (String.valueOf(attArr[infoNum])) {
-                            case "0":
-                                attButton.setText(null);
-                                break;
-                            case "1":
-                                attButton.setText("출석");
-                                break;
-                            case "2":
-                                attButton.setText("결석");
-                                break;
-                            case "3":
-                                attButton.setText("지각/조퇴");
-                                break;
-                        }
-                        attButton.setBackgroundColor(Color.rgb(185, 235, 199));
-
-                        int finalInfoId = infoId;
-                        attButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (attButton.getText().toString().equals("")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 null일 때", Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                } else if (attButton.getText().toString().equals("출석")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 출석일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                } else if (attButton.getText().toString().equals("결석")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 결석일 때", Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                } else {
-                                    Toast.makeText(MainActivity.this, "현재 text가 지각/조퇴일 때", Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                }
-                            }
-                        });
-                        tableRowAtt.addView(attButton);
+                for (int j = 0; j < selectTimes; j++) {
+                    int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
+                    Button attButton = new Button(this);
+                    attButton.setWidth(50);
+                    switch (String.valueOf(attArr[infoNum])) {
+                        case "0":
+                            attButton.setText(null);
+                            break;
+                        case "1":
+                            attButton.setText("출석");
+                            break;
+                        case "2":
+                            attButton.setText("결석");
+                            break;
+                        case "3":
+                            attButton.setText("지각/조퇴");
+                            break;
                     }
-                } else {
-                    for (int j = 0; j < 5; j++) {
-                        int infoNum = i + j; // 해당 출석정보가 해당 과목 중 몇 번째 출석정보인지
-                        Button attButton = new Button(this);
-                        attButton.setWidth(50);
-                        attButton.setText(String.valueOf(attArr[i + j]));
-                        attButton.setBackgroundColor(Color.rgb(185, 235, 199));
+                    attButton.setBackgroundColor(Color.rgb(185, 235, 199));
+                    if (selectTimes == 5) {
                         attButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT, 1f));
-                        switch (String.valueOf(attArr[infoNum])) {
-                            case "0":
-                                attButton.setText(null);
-                                break;
-                            case "1":
-                                attButton.setText("출석");
-                                break;
-                            case "2":
-                                attButton.setText("결석");
-                                break;
-                            case "3":
-                                attButton.setText("지각/조퇴");
-                                break;
-                        }
-                        int finalInfoId = infoId;
-                        attButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (attButton.getText().toString().equals("")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 null일 때", Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                } else if (attButton.getText().toString().equals("출석")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 출석일 때 infoId:" + finalInfoId + "infoNum:" + infoNum, Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                } else if (attButton.getText().toString().equals("결석")) {
-                                    Toast.makeText(MainActivity.this, "현재 text가 결석일 때", Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                } else {
-                                    Toast.makeText(MainActivity.this, "현재 text가 지각/조퇴일 때", Toast.LENGTH_SHORT).show();
-                                    sqlDB = myDBHelper.getWritableDatabase();
-                                    sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
-                                    updateView(Integer.parseInt(viewSemester.getText().toString()));
-                                }
-                            }
-                        });
-                        tableRowAtt.addView(attButton);
                     }
+
+                    int finalInfoId = infoId;
+                    attButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (attButton.getText().toString().equals("")) {
+                                sqlDB = myDBHelper.getWritableDatabase();
+                                sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 1 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                updateView(Integer.parseInt(viewSemester.getText().toString()));
+                            } else if (attButton.getText().toString().equals("출석")) {
+                                sqlDB = myDBHelper.getWritableDatabase();
+                                sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 2 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                updateView(Integer.parseInt(viewSemester.getText().toString()));
+                            } else if (attButton.getText().toString().equals("결석")) {
+                                sqlDB = myDBHelper.getWritableDatabase();
+                                sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 3 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                updateView(Integer.parseInt(viewSemester.getText().toString()));
+                            } else {
+                                sqlDB = myDBHelper.getWritableDatabase();
+                                sqlDB.execSQL("UPDATE attInfoTBL SET attendance = 0 WHERE subjectId = " + subject.subjectId + " AND infoId = " + (finalInfoId + infoNum) + ";");
+                                updateView(Integer.parseInt(viewSemester.getText().toString()));
+                            }
+                        }
+                    });
+                    tableRowAtt.addView(attButton);
                 }
 
                 tableLayout.addView(tableRowDate);
@@ -651,9 +461,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         subjectLinearLayout.addView(tableLayout);
-        // underContent Layout 안에 subjectLinearLayout 추가(제일 마지막 부분)
+
+        // underContent Layout 안에 subjectLinearLayout 추가(제일 아래에 추가되도록 함)
         underContent.addView(subjectLinearLayout);
-//        underContent.addView(subjectLinearLayout, 0);
     }
 
     static private class Subject { // 과목 클래스
@@ -687,18 +497,18 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL("CREATE TABLE subjectTBL(subjectId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "semester INTEGER, subjectName CHAR(30), subjectProfessor CHAR(20), " +
                     "subjectMemo CHAR(50), times INTEGER)");
-            Toast.makeText(MainActivity.this, "subjectTBL 생성 확인", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "subjectTBL 생성 확인", Toast.LENGTH_SHORT).show();
 
             db.execSQL("CREATE TABLE attInfoTBL(infoId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "subjectId INTEGER, date INTEGER, attendance INTEGER," +
                     "FOREIGN KEY(subjectId) REFERENCES subjectTBL(subjectId))");
-            Toast.makeText(MainActivity.this, "attInfoTBL 생성 확인", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "attInfoTBL 생성 확인", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // 최초 실행 시에만 작동하도록 변경
-            Toast.makeText(MainActivity.this, "App 시작", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "App 시작", Toast.LENGTH_SHORT).show();
             db.execSQL("DROP TABLE IF EXISTS subjectTBL");
             db.execSQL("DROP TABLE IF EXISTS attInfoTBL"); // Attendance Info Table
             onCreate(db);
