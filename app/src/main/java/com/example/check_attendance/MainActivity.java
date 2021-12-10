@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Check Attendance");
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 설정 listView 불러오기
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -239,6 +243,9 @@ public class MainActivity extends AppCompatActivity {
                 buttonEditMemo = (Button) subjectSettingDialog.findViewById(R.id.buttonEditMemo); // 과목 메모
                 buttonDeleteSubject = (Button) subjectSettingDialog.findViewById(R.id.buttonDeleteSubject); // 과목 삭제 버튼
 
+                AlertDialog ad = dlg.create();
+                ad.show();
+
                 buttonEditSubject.setOnClickListener(new View.OnClickListener() { // 과목 이름 Button OnClickListener
                     @Override
                     public void onClick(View view) {
@@ -266,15 +273,15 @@ public class MainActivity extends AppCompatActivity {
                         updateView(Integer.parseInt(viewSemester.getText().toString()));
                     }
                 });
-                buttonDeleteSubject.setOnClickListener(new View.OnClickListener() { // 과목 메모 Button OnClickListener
+                buttonDeleteSubject.setOnClickListener(new View.OnClickListener() { // 과목 Delete Button OnClickListener
                     @Override
                     public void onClick(View view) {
                         sqlDB = myDBHelper.getWritableDatabase();
                         sqlDB.execSQL("DELETE FROM subjectTBL WHERE subjectId = " + subject.subjectId + ";");
+                        ad.dismiss();
                         updateView(Integer.parseInt(viewSemester.getText().toString()));
                     }
                 });
-                dlg.show();
             }
         });
 
@@ -487,7 +494,7 @@ public class MainActivity extends AppCompatActivity {
         return Math.round((float) dp * density);
     }
 
-    private class myDBHelper extends SQLiteOpenHelper {
+    static class myDBHelper extends SQLiteOpenHelper {
         public myDBHelper(Context context) {
             super(context, "groupDB", null, 1);
         }
